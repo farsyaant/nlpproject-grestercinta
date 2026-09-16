@@ -1,0 +1,10 @@
+ .gitignore                                         |     1 [32m+[m
+ .vscode/settings.json                              |     3 [32m+[m
+ cnbc-geopolitics-scraper.py                        |   301 [31m-[m
+ data/processed/bi_usd_rate_clean.csv               |  1203 [31m--[m
+ data/processed/geopolitics_news_clean.csv          | 13530 [31m---------------[m
+ data/processed/merged_news_fx_dataset.csv          |  1203 [31m--[m
+ data/raw/2-cnbc-geoplotical-5years.csv             | 16734 [31m-------------------[m
+ src/preprocessing_pipeline.ipynb                   |  1769 [32m+[m[31m-[m
+ .../scrape-cnbc-published.py                       |     0
+ 9 files changed, 813 insertions(+), 33931 deletions(-)
