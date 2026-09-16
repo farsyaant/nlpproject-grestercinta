@@ -1,43 +1,3 @@
-"""
-scrape_cnbc_published.py
-
-Scraping ulang tanggal PUBLISH (tanggal, jam, timezone) dari setiap URL artikel
-CNBC yang ada di kolom `url` pada file CSV, lalu menyimpannya sebagai kolom baru:
-
-    - published_raw       -> teks mentah yang ditemukan di halaman,
-                              contoh: "Published Tue, Sep 8 20263:28 AM EDT"
-    - published_date      -> tanggal, format YYYY-MM-DD (contoh: 2026-09-08)
-    - published_time      -> jam, format HH:MM AM/PM (contoh: 03:28 AM)
-    - published_timezone  -> timezone singkatan (contoh: EDT, EST, GMT, dst)
-    - published_iso        -> datetime ISO lengkap dengan offset UTC jika tersedia
-                              dari JSON-LD (contoh: 2026-09-08T03:28:00-0400)
-    - scrape_status       -> "ok" / "not_found" / "error: <pesan>"
-
-CARA PAKAI
-----------
-1. Install dependency (sekali saja):
-       pip install requests beautifulsoup4 pandas tqdm lxml
-
-2. Jalankan:
-       python scrape-cnbc-published.py --input data/raw/2-cnbc-geopolitics-5years.csv --output cnbc-with-published.csv
-
-3. Script ini BISA DILANJUTKAN (resume) kalau berhenti di tengah jalan:
-   jalankan ulang command yang sama dengan --output yang sama, baris yang sudah
-   berhasil di-scrape (status "ok") tidak akan di-scrape ulang.
-
-CATATAN PENTING
-----------------
-- File kamu punya ~16.700 baris. Scraping semuanya akan makan waktu LAMA
-  (bisa 1-3+ jam tergantung koneksi & rate limit dari CNBC) dan berisiko
-  di-block sementara oleh CNBC kalau terlalu cepat. Karena itu script ini:
-    * pakai multithreading terbatas (default 8 worker, bisa diubah --workers)
-    * kasih jeda kecil + retry otomatis kalau kena error / rate-limit (HTTP 429/503)
-    * nulis progress ke file output SECARA BERKALA (checkpoint), bukan nunggu
-      sampai semua selesai baru disimpan -> aman kalau script terhenti/di-Ctrl+C
-- Kalau mau coba dulu dengan jumlah baris kecil, pakai --limit, contoh:
-       python scrape_cnbc_published.py --input in.csv --output out.csv --limit 50
-"""
-
 import argparse
 import json
 import re
@@ -51,10 +11,6 @@ import requests
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
-# ----------------------------------------------------------------------------
-# Konfigurasi
-# ----------------------------------------------------------------------------
-
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -67,8 +23,6 @@ REQUEST_TIMEOUT = 15
 MAX_RETRIES = 3
 RETRY_BACKOFF_SEC = 3
 
-# Pola teks "Published Tue, Sep 8 20263:28 AM EDT" (kadang tanpa spasi antara
-# tahun & jam karena elemen HTML digabung waktu di-scrape / di-render).
 PUBLISHED_TEXT_RE = re.compile(
     r"Published\s+"
     r"(?P<dow>[A-Za-z]{3}),\s*"
@@ -91,17 +45,7 @@ MONTH_MAP = {
     )
 }
 
-
-# ----------------------------------------------------------------------------
-# Ekstraksi tanggal publish dari satu halaman artikel
-# ----------------------------------------------------------------------------
-
 def _from_jsonld(soup: BeautifulSoup):
-    """
-    Cara paling akurat: banyak halaman CNBC menaruh datePublished di dalam
-    JSON-LD (<script type="application/ld+json">) dengan format ISO8601
-    lengkap dengan offset timezone, misal: 2026-09-08T03:28:00-0400
-    """
     for script in soup.find_all("script", {"type": "application/ld+json"}):
         raw = script.string or script.get_text()
         if not raw:
@@ -128,11 +72,6 @@ def _from_jsonld(soup: BeautifulSoup):
 
 
 def _from_visible_text(soup: BeautifulSoup, full_page_text: str):
-    """
-    Fallback: cari teks "Published ..." yang tampil di halaman, biasanya ada
-    di elemen dengan class mengandung 'ArticleHeader' / 'Timestamp'.
-    """
-    # coba elemen spesifik dulu (lebih bersih)
     candidates = soup.select(
         "[class*='ArticleHeader-time'], [class*='ArticleHeader-timestamp'], "
         "[class*='Timestamp'], time"
@@ -143,7 +82,6 @@ def _from_visible_text(soup: BeautifulSoup, full_page_text: str):
         if m:
             return m.group(0)
 
-    # fallback terakhir: cari di seluruh teks halaman
     m = PUBLISHED_TEXT_RE.search(full_page_text)
     if m:
         return m.group(0)
@@ -151,10 +89,6 @@ def _from_visible_text(soup: BeautifulSoup, full_page_text: str):
 
 
 def parse_published_text(text: str):
-    """
-    Parse teks mentah "Published Tue, Sep 8 20263:28 AM EDT" (dengan atau
-    tanpa spasi sebelum jam) menjadi (date, time, timezone).
-    """
     m = PUBLISHED_TEXT_RE.search(text)
     if not m:
         return None, None, None
@@ -170,12 +104,7 @@ def parse_published_text(text: str):
 
 
 def parse_iso_datetime(iso_str: str):
-    """
-    Parse datetime ISO dari JSON-LD, contoh: 2026-09-08T03:28:00-0400
-    Mengembalikan (date, time, timezone_offset).
-    """
     try:
-        # normalisasi "Z" -> "+00:00" agar fromisoformat bisa parse
         cleaned = iso_str.replace("Z", "+00:00")
         dt = datetime.fromisoformat(cleaned)
     except ValueError:
@@ -188,10 +117,6 @@ def parse_iso_datetime(iso_str: str):
 
 
 def scrape_one_url(url: str):
-    """
-    Ambil satu halaman artikel dan ekstrak info publish.
-    Return dict siap dimasukkan ke DataFrame.
-    """
     result = {
         "published_raw": "",
         "published_date": "",
@@ -210,14 +135,12 @@ def scrape_one_url(url: str):
         try:
             resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
             if resp.status_code in (429, 503):
-                # kena rate limit, tunggu lalu coba lagi
                 time.sleep(RETRY_BACKOFF_SEC * attempt)
                 continue
             resp.raise_for_status()
 
             soup = BeautifulSoup(resp.text, "lxml")
 
-            # 1) coba JSON-LD dulu (paling akurat & selalu ada offset timezone)
             iso_val = _from_jsonld(soup)
             if iso_val:
                 date_str, time_str, tz_str = parse_iso_datetime(iso_val)
@@ -232,7 +155,6 @@ def scrape_one_url(url: str):
                     )
                     return result
 
-            # 2) fallback ke teks "Published ..." yang tampil di halaman
             page_text = soup.get_text(" ", strip=True)
             raw_text = _from_visible_text(soup, page_text)
             if raw_text:
@@ -258,11 +180,6 @@ def scrape_one_url(url: str):
     result["scrape_status"] = f"error: {last_err}"
     return result
 
-
-# ----------------------------------------------------------------------------
-# Main
-# ----------------------------------------------------------------------------
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", required=True, help="Path CSV input")
@@ -284,8 +201,6 @@ def main():
         "published_timezone", "published_iso", "scrape_status",
     ]
 
-    # Resume: kalau file output sudah ada, pakai itu sebagai basis dan
-    # lanjutkan baris yang belum "ok".
     try:
         df_out = pd.read_csv(args.output)
         if len(df_out) == len(df_in) and "scrape_status" in df_out.columns:
