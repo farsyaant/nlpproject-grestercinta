@@ -1,1 +1,9 @@
 pandas>=2.0
+numpy>=1.24
+holidays>=0.30
+nltk>=3.8
+Sastrawi>=1.0.1
+langdetect>=1.0.9
+vaderSentiment>=3.3.2
+pysentiment2>=0.1.1
+scikit-learn>=1.3
