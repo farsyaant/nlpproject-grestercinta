@@ -6,11 +6,19 @@ hanya dipakai oleh eksperimen fitur NLP di
 `notebook/nlp_feature_experiment.ipynb`.
 
 Prinsip desain:
-- `load_baseline_df_model()` mereproduksi persis langkah 1-5 di
-  `baseline_kurs_tengah.ipynb` (Kurs Tengah, target NAIK/TURUN, fitur lag/
-  rolling, dropna) supaya jumlah baris & urutan tanggalnya identik dengan
-  baseline. Ini WAJIB supaya `chronological_split()` menghasilkan potongan
-  train/val/test di tanggal yang sama persis dengan baseline (apple-to-apple).
+- `load_baseline_df_model()` mereproduksi kerangka split baseline (Kurs
+  Tengah, fitur lag/rolling, dropna) supaya jumlah baris & urutan tanggalnya
+  identik -- ini WAJIB supaya `chronological_split()` menghasilkan potongan
+  train/val/test di baris yang sama persis (apple-to-apple).
+- **Target sudah diubah jadi regresi log return** (bukan klasifikasi
+  NAIK/TURUN seperti versi awal): `Target_t = log(KursTengah_{t+1} /
+  KursTengah_t)`. Ini keputusan sadar per diskusi tim -- baseline milik
+  Kenzi (`src/baseline_kurs_tengah.ipynb`) masih klasifikasi biner dan
+  TIDAK diubah oleh file ini, jadi baris hasil klasifikasi lama di
+  `nlp_experiment_results.csv` (Naive Majority/Persistence, Logistic
+  Regression, Skenario A/B/C versi awal) sekarang dianggap arsip -- tidak
+  bisa dibandingkan langsung dengan angka regresi (RMSE/MAE) di bawahnya
+  karena jenis target berbeda total.
 - Semua fitur NLP yang butuh "belajar" dari data (TF-IDF + SVD) di-`fit`
   HANYA pada teks periode train lalu `.transform()` saja untuk val/test,
   supaya tidak ada data leakage. Fitur lexicon (VADER, Loughran-McDonald,
@@ -23,12 +31,17 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import pysentiment2 as ps
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import (
+    accuracy_score,
+    balanced_accuracy_score,
+    mean_absolute_error,
+    mean_squared_error,
+)
 from sklearn.preprocessing import StandardScaler
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
@@ -43,10 +56,12 @@ TS_FEATURES = [
 
 
 def load_baseline_df_model(raw_dir: Path) -> pd.DataFrame:
-    """Reproduksi cell 3/5/7/9 di src/baseline_kurs_tengah.ipynb.
+    """Kerangka baris/split sama seperti baseline, tapi Target = log return.
 
-    Baris & urutan tanggal harus identik dengan baseline supaya split
-    kronologis jatuh di tanggal yang sama persis.
+    `Target_t = log(KursTengah_{t+1} / KursTengah_t)` -- regresi kontinu,
+    bukan klasifikasi NAIK/TURUN seperti versi awal file ini. Baris & urutan
+    tanggal tetap identik dengan baseline (dropna criteria sama) supaya
+    split kronologis jatuh di baris yang sama persis.
     """
     bi_raw = pd.read_csv(raw_dir / "bi-usd-rate.csv")
     bi_raw["Tanggal_dt"] = pd.to_datetime(bi_raw["Tanggal"], errors="coerce")
@@ -57,7 +72,7 @@ def load_baseline_df_model(raw_dir: Path) -> pd.DataFrame:
 
     df_model = bi_raw.copy()
     df_model["kurs Next"] = df_model["Kurs Tengah"].shift(-1)
-    df_model["Target"] = (df_model["kurs Next"] > df_model["Kurs Tengah"]).astype(int)
+    df_model["Target"] = np.log(df_model["kurs Next"] / df_model["Kurs Tengah"])
     df_model = df_model.iloc[:-1].copy()
 
     for lag in range(1, 6):
@@ -65,6 +80,11 @@ def load_baseline_df_model(raw_dir: Path) -> pd.DataFrame:
     df_model["kurs_roll_mean5"] = df_model["Kurs Tengah"].shift(1).rolling(5).mean()
     df_model["kurs_roll_std5"] = df_model["Kurs Tengah"].shift(1).rolling(5).std()
     df_model["kurs_diff1"] = df_model["Kurs Tengah"] - df_model["kurs_lag1"]
+
+    # naive predictor "return realized kemarin" = Target hari sebelumnya
+    # (log(KursTengah_t / KursTengah_{t-1})), dihitung sebelum dropna/split
+    # supaya tidak salah ambil dari baris di seberang batas train/val/test.
+    df_model["naive_last_return"] = df_model["Target"].shift(1)
 
     df_model = df_model.dropna(subset=TS_FEATURES + ["Target"]).reset_index(drop=True)
     return df_model
@@ -187,33 +207,58 @@ class TfidfSvdExtractor:
 
 
 # ---------------------------------------------------------------------------
-# 3. Model & evaluasi -- identik dengan baseline (cell 13/19) supaya adil
+# 3. Model & evaluasi -- target regresi (log return)
 # ---------------------------------------------------------------------------
 
 def evaluate_model(y_true, y_pred, model_name: str) -> dict:
+    """RMSE & MAE (metrik regresi) + Directional/Balanced Accuracy dari TANDA
+    (arah naik/turun) prediksi vs realisasi -- supaya masih ada angka yang
+    bisa dibandingkan secara konsep dengan formulasi klasifikasi versi awal.
+    """
+    y_true = np.asarray(y_true)
+    y_pred = np.asarray(y_pred)
+
+    mse = mean_squared_error(y_true, y_pred)
+    dir_true = (y_true > 0).astype(int)
+    dir_pred = (y_pred > 0).astype(int)
+
     return {
         "model": model_name,
-        "directional_accuracy": accuracy_score(y_true, y_pred),
-        "f1_score": f1_score(y_true, y_pred, zero_division=0),
+        "RMSE": np.sqrt(mse),
+        "MAE": mean_absolute_error(y_true, y_pred),
+        "directional_accuracy": accuracy_score(dir_true, dir_pred),
+        "balanced_directional_accuracy": balanced_accuracy_score(dir_true, dir_pred),
     }
 
 
-def train_eval_logreg(feature_cols, train_df, val_df, test_df, model_name: str):
-    """Logistic Regression + StandardScaler, di-fit HANYA di train (sama seperti baseline cell 19)."""
+def evaluate_naive(train_df, val_df, test_df, column: str, model_name: str) -> list[dict]:
+    """Evaluasi prediktor naive yang sudah berupa kolom siap pakai (mis.
+    `naive_last_return`), tanpa training apapun."""
+    rows = []
+    for split_name, split_df in [("Val", val_df), ("Test", test_df)]:
+        rows.append(evaluate_model(split_df["Target"], split_df[column], f"{model_name} - {split_name}"))
+    return rows
+
+
+def train_eval_regressor(model, feature_cols, train_df, val_df, test_df, model_name: str, scale: bool = False):
+    """Latih 1 model regresi, evaluasi di Val & Test. `scale=True` untuk
+    model linear (ElasticNet) yang sensitif terhadap skala fitur; model
+    tree-based (LightGBM/XGBoost) tidak butuh scaling.
+    """
     X_train, y_train = train_df[feature_cols], train_df["Target"]
     X_val, y_val = val_df[feature_cols], val_df["Target"]
     X_test, y_test = test_df[feature_cols], test_df["Target"]
 
-    scaler = StandardScaler()
-    X_train_s = scaler.fit_transform(X_train)
-    X_val_s = scaler.transform(X_val)
-    X_test_s = scaler.transform(X_test)
+    if scale:
+        scaler = StandardScaler()
+        X_train = scaler.fit_transform(X_train)
+        X_val = scaler.transform(X_val)
+        X_test = scaler.transform(X_test)
 
-    clf = LogisticRegression(max_iter=1000, random_state=42)
-    clf.fit(X_train_s, y_train)
+    model.fit(X_train, y_train)
 
     rows = [
-        evaluate_model(y_val, clf.predict(X_val_s), f"{model_name} - Val"),
-        evaluate_model(y_test, clf.predict(X_test_s), f"{model_name} - Test"),
+        evaluate_model(y_val, model.predict(X_val), f"{model_name} - Val"),
+        evaluate_model(y_test, model.predict(X_test), f"{model_name} - Test"),
     ]
-    return rows, clf
+    return rows, model
