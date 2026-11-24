@@ -1,0 +1,108 @@
+# Kamus geopolitik (biner). Satu istilah per baris, huruf kecil, boleh frasa. Edit bebas.
+# Akhiran s/es/ed/ing otomatis dikenali (mis. "sanction" cocok dengan sanctions/sanctioned).
+# Nama negara sengaja tidak dimasukkan supaya skor tidak bias ke topik/negara tertentu.
+# konflik dan militer
+war
+warfare
+invasion
+invade
+invaded
+military
+militar
+missile
+airstrike
+air strike
+troop
+ceasefire
+cease-fire
+conflict
+armed conflict
+attack
+offensive
+escalation
+escalate
+nuclear
+drone
+bombing
+shelling
+hostage
+terror
+terrorism
+insurgent
+rebel
+coup
+occupation
+annex
+annexation
+siege
+blockade
+warship
+naval
+defense
+defence
+weapons
+arms
+# sanksi dan perdagangan
+sanction
+embargo
+tariff
+trade war
+trade tension
+trade dispute
+export control
+export ban
+import ban
+boycott
+retaliation
+retaliatory
+decoupling
+protectionism
+price cap
+supply chain disruption
+supply disruption
+# ketegangan dan diplomasi
+geopolitical
+geopolitics
+tension
+tensions
+standoff
+hostility
+hostilities
+diplomatic
+diplomacy
+sovereignty
+border
+territorial
+disputed
+unrest
+protest
+instability
+crisis
+threat
+warn
+ultimatum
+# aliansi dan lembaga
+nato
+brics
+opec
+g7
+g20
+united nations
+security council
+# energi dan jalur strategis
+strait
+chokepoint
+red sea
+pipeline
+energy security
+oil supply
+supply shock
+shipping lane
+# risiko politik
+political risk
+regime
+authoritarian
+autocratic
+election interference
+cyberattack
+espionage

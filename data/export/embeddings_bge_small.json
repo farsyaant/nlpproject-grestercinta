@@ -1,0 +1,18 @@
+{
+  "model": "BAAI/bge-small-en-v1.5",
+  "revision": null,
+  "pooling": null,
+  "recipe": "title_text",
+  "max_seq_length": 512,
+  "normalized": true,
+  "n": 4332,
+  "dim": 384,
+  "n_anchors": 3,
+  "articles_fingerprint": "39283221d34c8e3455025c04355671964f56036a",
+  "created": "2026-11-24T10:15:12",
+  "seed": 42,
+  "versions": {
+    "sentence_transformers": "5.7.0",
+    "torch": "2.11.0+cu130"
+  }
+}

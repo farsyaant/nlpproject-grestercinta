@@ -1,0 +1,25 @@
+{
+  "final": [
+    {
+      "model": "GradientBoosting",
+      "set": "bge_small",
+      "fusion": "early"
+    },
+    {
+      "model": "Ridge",
+      "set": "bge_base",
+      "fusion": "early"
+    },
+    {
+      "model": "SVR",
+      "set": "bge_base",
+      "fusion": "late"
+    }
+  ],
+  "best_model": "GradientBoosting",
+  "etag": "bge_small",
+  "ctrl_cell": [
+    "bge_small",
+    "early"
+  ]
+}

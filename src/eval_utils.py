@@ -56,3 +56,64 @@ def naive_baselines(y_true, ret_today) -> dict:
         "Prediksi 0": evaluate(y_true, np.zeros(len(y_true))),
         "Return kemarin": evaluate(y_true, ret_today),
     }
+
+
+# ---------------------------------------------------------------------------
+# Tambahan Tugas 3. `evaluate` dan `naive_baselines` di atas TIDAK diubah.
+# ---------------------------------------------------------------------------
+def up_share(y_true) -> dict:
+    """Proporsi hari naik / turun / nol pada target."""
+    y = np.asarray(y_true, dtype=float).ravel()
+    nz = y[y != 0]
+    return {"naik": float((nz > 0).mean()), "turun": float((nz < 0).mean()), "nol": float((y == 0).mean())}
+
+
+def majority_baselines(y_true) -> dict:
+    """DirAcc untuk "selalu tebak naik" / "selalu tebak turun" (target 0 dilewati).
+    Model baru dianggap punya sinyal arah kalau DirAcc-nya melampaui "Mayoritas"."""
+    s = up_share(y_true)
+    return {"Selalu naik": s["naik"], "Selalu turun": s["turun"], "Mayoritas": max(s["naik"], s["turun"])}
+
+
+def is_collapsed(y_pred, y_true, tol: float = 0.05) -> bool:
+    """True kalau std prediksi < tol * std target (model menebak hampir konstan)."""
+    return bool(np.std(y_pred) < tol * np.std(y_true))
+
+
+def dm_test(y_true, pred_a, pred_b, loss: str = "se", h: int = 1):
+    """Diebold-Mariano (koreksi Harvey, t-dist). Return (stat, p).
+    stat < 0 berarti A lebih akurat dari B. loss: "se" (kuadrat) atau "ae" (absolut)."""
+    from scipy import stats
+    y, a, b = (np.asarray(v, dtype=float).ravel() for v in (y_true, pred_a, pred_b))
+    ea, eb = y - a, y - b
+    d = ea ** 2 - eb ** 2 if loss == "se" else np.abs(ea) - np.abs(eb)
+    n = len(d)
+    dc = d - d.mean()
+    gamma = [(dc[k:] * dc[: n - k]).sum() / n for k in range(h)]
+    var = (gamma[0] + 2 * sum(gamma[1:])) / n
+    if var <= 0:
+        return float("nan"), float("nan")
+    dm = d.mean() / np.sqrt(var) * np.sqrt((n + 1 - 2 * h + h * (h - 1) / n) / n)
+    return float(dm), float(2 * stats.t.sf(abs(dm), n - 1))
+
+
+def block_bootstrap_ci(y_true, y_pred, metric: str = "RMSE", ref_pred=None,
+                       block: int = 10, n_boot: int = 1000, seed: int = 42, alpha: float = 0.05):
+    """CI moving-block bootstrap untuk metrik. Kalau `ref_pred` diberikan, CI untuk
+    selisih metrik(y_pred) - metrik(ref_pred); negatif = y_pred lebih baik."""
+    y = np.asarray(y_true, dtype=float).ravel()
+    p = np.asarray(y_pred, dtype=float).ravel()
+    r = None if ref_pred is None else np.asarray(ref_pred, dtype=float).ravel()
+    n = len(y)
+    rng = np.random.default_rng(seed)
+    n_blocks = -(-n // block)
+    starts = rng.integers(0, n - block + 1, size=(n_boot, n_blocks))
+    idx = (starts[:, :, None] + np.arange(block)).reshape(n_boot, -1)[:, :n]
+    vals = []
+    for i in idx:
+        v = evaluate(y[i], p[i])[metric]
+        if r is not None:
+            v -= evaluate(y[i], r[i])[metric]
+        vals.append(v)
+    lo, hi = np.nanquantile(vals, [alpha / 2, 1 - alpha / 2])
+    return float(lo), float(hi)

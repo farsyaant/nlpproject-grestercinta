@@ -1,0 +1,14 @@
+{
+  "seed": 42,
+  "export_dir": "data/export",
+  "out_dir": "outputs",
+  "export_version": "export_v1",
+  "n_splits": 5,
+  "gap": 5,
+  "n_iter": 30,
+  "scoring": "neg_mean_squared_error",
+  "pca_k": [5, 10, 20, 40],
+  "n_seeds": 3,
+  "emb_tags": ["bge_small", "bge_base"],
+  "max_seq_length": 512
+}

@@ -1,0 +1,19 @@
+{
+  "model": "ProsusAI/finbert",
+  "revision": null,
+  "labels": [
+    "positive",
+    "negative",
+    "neutral"
+  ],
+  "recipe": "title_text",
+  "max_seq_length": 512,
+  "n": 4332,
+  "articles_fingerprint": "39283221d34c8e3455025c04355671964f56036a",
+  "created": "2026-11-24T10:21:56",
+  "seed": 42,
+  "versions": {
+    "transformers": "5.20.2",
+    "torch": "2.11.0+cu130"
+  }
+}

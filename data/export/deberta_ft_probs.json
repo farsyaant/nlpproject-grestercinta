@@ -1,0 +1,21 @@
+{
+  "model": "nickmuchi/deberta-v3-base-finetuned-finance-text-classification",
+  "mode": "probs",
+  "recipe": "title_text",
+  "revision": null,
+  "max_seq_length": 512,
+  "n": 4332,
+  "dim": 3,
+  "articles_fingerprint": "39283221d34c8e3455025c04355671964f56036a",
+  "created": "2026-11-24T12:55:45",
+  "seed": 42,
+  "versions": {
+    "transformers": "5.20.2",
+    "torch": "2.11.0+cu130"
+  },
+  "labels": [
+    "bearish",
+    "neutral",
+    "bullish"
+  ]
+}
