@@ -1,0 +1,35 @@
+{
+  "model": "C",
+  "seed": 42,
+  "sumber": [
+    "data/export/prices_daily.parquet",
+    "data/export/articles.parquet"
+  ],
+  "n_baris": 1194,
+  "n_artikel": 4332,
+  "split": {
+    "train": 836,
+    "val": 178,
+    "test": 180
+  },
+  "embedding": {
+    "model": {
+      "finbert": "ProsusAI/finbert",
+      "roberta": "distilroberta-base"
+    },
+    "pooling": "mean harian + L2",
+    "n_pca": 64,
+    "alpha_late": {
+      "finbert": 0.8300000000000001,
+      "roberta": 1.0,
+      "combined": 0.97
+    }
+  },
+  "versi": {
+    "torch": "2.14.1+cpu",
+    "transformers": "5.20.2",
+    "sklearn": "1.7.2",
+    "xgboost": "3.2.0",
+    "lightgbm": "4.6.0"
+  }
+}

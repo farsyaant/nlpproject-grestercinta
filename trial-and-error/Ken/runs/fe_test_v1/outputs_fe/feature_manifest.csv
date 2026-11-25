@@ -1,0 +1,28 @@
+group,feature,formula,lookback,leakage,hypothesis,status
+a_news,fe_news_count,news_count[t],0,rendah; artikel sudah dipetakan ke hari trading t (cutoff 15:00 WIB),volume berita = atensi; ekstrem -> volatilitas naik,kept
+a_news,fe_no_news,1[news_count[t] == 0],0,rendah; flag tanggal t,hari tanpa berita beda rezim; 0 sentimen adalah placeholder,kept
+a_news,fe_news_ma5,mean(news_count[t-4..t]),5,rendah; window berakhir di t,"arus berita halus, mengurangi noise harian",kept
+a_news,fe_news_z20,(n[t]-mean(n[t-20..t-1]))/(std(n[t-20..t-1])+1),21,rendah; baseline tidak memasukkan t,lonjakan berita = kejutan informasi,kept
+b_momentum,fe_vader_d1,0 if n[t]=0 else v[t]-v_ffill[t-1],1,rendah; ffill hanya masa lalu,perubahan sentimen judul = berita baru,kept
+b_momentum,fe_vader_d3,mean(v_obs[t-2..t])-mean(v_obs[t-5..t-3]),5,rendah; hanya observasi masa lalu/t,momentum sentimen 3 hari vs 3 hari sebelumnya,kept
+b_momentum,fe_lmnet_d1,0 if n[t]=0 else l[t]-l_ffill[t-1],1,rendah; ffill hanya masa lalu,perubahan nada isi artikel,kept
+b_momentum,fe_vader_dailystd5,"std(v_obs[t-4..t]), min 2 observasi, else 0",5,rendah; hanya observasi masa lalu/t,dispersi sentimen harian = ketidaksepakatan,kept
+b_momentum,fe_vader_range5d,"max(v_obs[t-4..t])-min(v_obs[t-4..t]), else 0",5,rendah; hanya observasi masa lalu/t,rentang ekstrem sentimen,kept
+b_momentum,fe_title_text_gap,lm_title_net[t]-lm_text_net[t],0,rendah; keduanya hari t,judul sensasional vs isi artikel,kept
+c_decay,fe_vader_ewm3,"EWM(v[t], halflife=3, adjust=False)",inf (efektif ~9 hari),rendah; EWM causal,reaksi cepat ke berita terbaru,kept
+c_decay,fe_vader_ewm10,"EWM(v[t], halflife=10, adjust=False)",inf (efektif ~30 hari),rendah; EWM causal,sentimen lambat/persisten,kept
+c_decay,fe_lmnet_ewm5,"EWM(l[t], halflife=5, adjust=False)",inf (efektif ~15 hari),rendah; EWM causal,nada isi yang bertahan,kept
+d_surprise,fe_vader_surprise20,0 if n[t]=0 else (v[t]-mean(v[t-20..t-1]))/(std(...)+0.01),21,rendah; baseline tidak memasukkan t,kejutan sentimen vs kebiasaan 20 hari,kept
+d_surprise,fe_lmnet_surprise20,0 if n[t]=0 else (l[t]-mean(l[t-20..t-1]))/(std(...)+0.01),21,rendah; baseline tidak memasukkan t,kejutan nada isi,kept
+d_surprise,fe_lmunc_surprise20,0 if n[t]=0 else (u[t]-mean(u[t-20..t-1]))/(std(...)+0.01),21,rendah; baseline tidak memasukkan t,lonjakan ketidakpastian = risiko,kept
+e_interaction,fe_vader_x_vol5,v[t]*sigma5[t],5,rendah; sigma5 dari return t-4..t,sentimen lebih relevan saat kurs volatil,kept
+e_interaction,fe_neg_x_vol5,vader_title_neg_ratio[t]*sigma5[t],5,rendah; sigma5 dari return t-4..t,berita negatif x volatilitas = tekanan,kept
+e_interaction,fe_news_x_vol5,ln(1+news_count[t])*sigma5[t],5,rendah; sigma5 dari return t-4..t,arus berita x volatilitas,kept
+f_regime,fe_vol5,std(ret[t-4..t]),5,rendah; return t sudah diketahui,volatilitas jangka pendek,kept
+f_regime,fe_vol_ratio_5_20,"clip(ln((sigma5[t]+1e-6)/(sigma20[t]+1e-6)), -3, 3)",20,rendah; kedua window berakhir di t,vol pendek relatif vol panjang (log ratio),kept
+f_regime,fe_vol_high,1[sigma5[t] > sigma20[t]],20,rendah; ambang tidak di-fit,rezim volatil tinggi,kept
+f_regime,fe_is_monday,1[dayofweek[t] == 0],0,rendah; kalender,efek Senin / berita akhir pekan,kept
+f_regime,fe_is_friday,1[dayofweek[t] == 4],0,rendah; kalender,efek Jumat / posisi akhir pekan,kept
+g_price,fe_ret_t,ret[t] = ln(kurs_mid[t]/kurs_mid[t-1]),1,rendah; A tidak punya level t,"return hari ini, bukan duplikat lag A",kept
+g_price,fe_ret_z5,(ret[t]-mean(ret[t-4..t-1]))/(std(ret[t-4..t-1])+1e-6),5,rendah; baseline tidak memasukkan t,kejutan return hari ini,kept
+g_price,fe_rsi5,mean(1[ret[t-4..t] > 0]),5,rendah; window berakhir di t,persistensi arah return,kept

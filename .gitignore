@@ -1,2 +1,7 @@
 src/preprocessing_pipeline_published.ipynb
 src/preprocessing_pipeline.ipynb
+data/processed/raw/
+trial-and-error/Ken/runs/*/venv/
+trial-and-error/Ken/runs/*/cache/
+trial-and-error/Ken/runs/*/kernels/
+/TUGAS_3_Panduan.md

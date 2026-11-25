@@ -1,0 +1,83 @@
+{
+  "model": "C",
+  "seed": 42,
+  "run_dir": "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\runs\\model_c_v1",
+  "sumber": [
+    "data/export/prices_daily.parquet",
+    "data/export/articles.parquet"
+  ],
+  "n_baris": 1194,
+  "n_artikel": 4332,
+  "split": {
+    "train": 836,
+    "val": 178,
+    "test": 180
+  },
+  "encoder": {
+    "finbert": {
+      "repo": "ProsusAI/finbert",
+      "pooling": "cls",
+      "dim": 768
+    },
+    "roberta": {
+      "repo": "distilroberta-base",
+      "pooling": "cls",
+      "dim": 768
+    },
+    "bge_base": {
+      "repo": "BAAI/bge-base-en-v1.5",
+      "pooling": "cls",
+      "dim": 768
+    },
+    "harrier270m": {
+      "repo": "microsoft/harrier-oss-v1-270m",
+      "pooling": "last",
+      "dim": 640
+    },
+    "qwen3_06b": {
+      "repo": "Qwen/Qwen3-Embedding-0.6B",
+      "pooling": "last",
+      "dim": 1024
+    },
+    "granite_r2": {
+      "repo": "ibm-granite/granite-embedding-english-r2",
+      "pooling": "cls",
+      "dim": 768
+    },
+    "jina_v5_nano": {
+      "repo": "jinaai/jina-embeddings-v5-text-nano-classification",
+      "pooling": "last",
+      "dim": 768
+    },
+    "finmodernbert": {
+      "repo": "BatuhanECB/FinModernBERT-embed-large",
+      "pooling": "mean",
+      "dim": 1024
+    }
+  },
+  "encoder_gagal": {},
+  "embedding": {
+    "teks": "judul",
+    "agregasi": "mean harian + L2",
+    "n_pca": 64,
+    "alpha_late": {
+      "C_finbert_late": 0.8300000000000001,
+      "C_roberta_late": 1.0,
+      "C_bge_base_late": 1.0,
+      "C_harrier270m_late": 1.0,
+      "C_qwen3_06b_late": 1.0,
+      "C_granite_r2_late": 0.9400000000000001,
+      "C_jina_v5_nano_late": 0.79,
+      "C_finmodernbert_late": 1.0,
+      "C_combined_late": 0.97,
+      "C_all_late": 0.97
+    }
+  },
+  "versi": {
+    "torch": "2.14.1+cu130",
+    "transformers": "5.20.2",
+    "sklearn": "1.7.2",
+    "xgboost": "3.2.0",
+    "lightgbm": "4.6.0"
+  }
+}

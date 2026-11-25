@@ -1,0 +1,5 @@
+{
+  "model": "distilroberta-base",
+  "n_artikel": 4332,
+  "dim": 768
+}

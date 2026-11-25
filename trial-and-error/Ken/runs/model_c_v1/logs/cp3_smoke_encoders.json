@@ -1,0 +1,86 @@
+[
+  {
+    "tag": "bge_base",
+    "repo": "BAAI/bge-base-en-v1.5",
+    "pooling": "cls",
+    "load_s": 47.8,
+    "encode_s": 0.73,
+    "shape": [
+      16,
+      768
+    ],
+    "finite": true,
+    "vram_peak_gb": 0.24,
+    "status": "ok"
+  },
+  {
+    "tag": "harrier270m",
+    "repo": "microsoft/harrier-oss-v1-270m",
+    "pooling": "last",
+    "load_s": 188.5,
+    "encode_s": 2.35,
+    "shape": [
+      16,
+      640
+    ],
+    "finite": false,
+    "vram_peak_gb": 0.55,
+    "status": "ok"
+  },
+  {
+    "tag": "qwen3_06b",
+    "repo": "Qwen/Qwen3-Embedding-0.6B",
+    "pooling": "last",
+    "load_s": 1271.4,
+    "encode_s": 3.32,
+    "shape": [
+      16,
+      1024
+    ],
+    "finite": true,
+    "vram_peak_gb": 1.26,
+    "status": "ok"
+  },
+  {
+    "tag": "granite_r2",
+    "repo": "ibm-granite/granite-embedding-english-r2",
+    "pooling": "cls",
+    "load_s": 25.4,
+    "encode_s": 0.59,
+    "shape": [
+      16,
+      768
+    ],
+    "finite": true,
+    "vram_peak_gb": 1.26,
+    "status": "ok"
+  },
+  {
+    "tag": "jina_v5_nano",
+    "repo": "jinaai/jina-embeddings-v5-text-nano-classification",
+    "pooling": "last",
+    "load_s": 24.3,
+    "encode_s": 0.43,
+    "shape": [
+      16,
+      768
+    ],
+    "finite": true,
+    "vram_peak_gb": 1.26,
+    "status": "ok"
+  },
+  {
+    "tag": "finmodernbert",
+    "repo": "BatuhanECB/FinModernBERT-embed-large",
+    "pooling": "mean",
+    "load_s": 65.0,
+    "encode_s": 1.69,
+    "shape": [
+      16,
+      1024
+    ],
+    "finite": true,
+    "vram_peak_gb": 1.26,
+    "status": "ok"
+  }
+]

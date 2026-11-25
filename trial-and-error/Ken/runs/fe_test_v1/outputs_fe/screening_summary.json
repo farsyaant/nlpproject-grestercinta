@@ -1,0 +1,50 @@
+{
+  "n_combos": 274,
+  "n_new_features_kept": 27,
+  "naive0_val": {
+    "MAE": 0.00246990903081786,
+    "MSE": 1.1436703565775854e-05,
+    "RMSE": 0.0033818195643434104,
+    "DirAcc": 0.0,
+    "PredStd": 0.0
+  },
+  "baseline_A_val": {
+    "Ridge": {
+      "MAE": 0.002510922831224666,
+      "MSE": 1.1509920421335827e-05,
+      "RMSE": 0.003392627362581371,
+      "DirAcc": 0.4602272727272727,
+      "PredStd": 0.00035397564673149195
+    },
+    "LightGBM": {
+      "MAE": 0.0026873432219425546,
+      "MSE": 1.242609187522795e-05,
+      "RMSE": 0.0035250662228145375,
+      "DirAcc": 0.4602272727272727,
+      "PredStd": 0.0006436738056841412
+    }
+  },
+  "best_combo_per_model": {
+    "Ridge": {
+      "combo_id": "c265",
+      "combo_type": "random_features",
+      "groups": "",
+      "n_total_features": 19,
+      "RMSE": 0.0032796728823784567,
+      "MAE": 0.002521562149353944,
+      "DirAcc": 0.5397727272727273,
+      "delta_rmse_pct_vs_A": -3.329410163012116
+    },
+    "LightGBM": {
+      "combo_id": "c201",
+      "combo_type": "random_features",
+      "groups": "",
+      "n_total_features": 12,
+      "RMSE": 0.003311248784035391,
+      "MAE": 0.0024592073246638073,
+      "DirAcc": 0.5625,
+      "delta_rmse_pct_vs_A": -6.065628991458411
+    }
+  },
+  "caveat": "Pemeringkatan memakai val; test tidak dipakai. Top val bisa overfit val."
+}

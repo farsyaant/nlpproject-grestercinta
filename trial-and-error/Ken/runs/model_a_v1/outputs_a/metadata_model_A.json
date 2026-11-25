@@ -1,0 +1,45 @@
+{
+  "model": "A",
+  "deskripsi": "Baseline time-series murni, tanpa fitur NLP",
+  "target": "log return kurs tengah hari berikutnya",
+  "fitur": [
+    "kurs_lag1",
+    "kurs_lag2",
+    "kurs_lag3",
+    "kurs_lag4",
+    "kurs_lag5",
+    "kurs_roll_mean5",
+    "kurs_roll_std5"
+  ],
+  "n_fitur": 7,
+  "models": [
+    "LinearRegression",
+    "Ridge",
+    "Lasso",
+    "ElasticNet",
+    "BayesianRidge",
+    "KNN",
+    "SVR",
+    "DecisionTree",
+    "RandomForest",
+    "ExtraTrees",
+    "AdaBoost",
+    "GradientBoosting",
+    "XGBoost",
+    "LightGBM",
+    "LSTM"
+  ],
+  "seed": 42,
+  "lstm": {
+    "lookback": 14,
+    "hidden_size": 32,
+    "epochs_max": 200,
+    "early_stopping_patience": 20
+  },
+  "metrik": [
+    "MAE",
+    "MSE",
+    "RMSE",
+    "DirAcc"
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "model": "B",
+  "seed": 42,
+  "sumber": [
+    "data/export/prices_daily.parquet",
+    "data/export/sentiment_daily.parquet"
+  ],
+  "n_baris": 1194,
+  "split": {
+    "train": 836,
+    "val": 178,
+    "test": 180
+  },
+  "fitur": {
+    "A": [
+      "kurs_lag1",
+      "kurs_lag2",
+      "kurs_lag3",
+      "kurs_lag4",
+      "kurs_lag5",
+      "kurs_roll_mean5",
+      "kurs_roll_std5"
+    ],
+    "B_vader": [
+      "kurs_lag1",
+      "kurs_lag2",
+      "kurs_lag3",
+      "kurs_lag4",
+      "kurs_lag5",
+      "kurs_roll_mean5",
+      "kurs_roll_std5",
+      "vader_title_mean",
+      "vader_title_min",
+      "vader_title_max",
+      "vader_title_std",
+      "vader_title_pos_ratio",
+      "vader_title_neg_ratio"
+    ],
+    "B_lm": [
+      "kurs_lag1",
+      "kurs_lag2",
+      "kurs_lag3",
+      "kurs_lag4",
+      "kurs_lag5",
+      "kurs_roll_mean5",
+      "kurs_roll_std5",
+      "lm_title_negative",
+      "lm_title_positive",
+      "lm_title_uncertainty",
+      "lm_title_litigious",
+      "lm_title_net",
+      "lm_text_negative",
+      "lm_text_positive",
+      "lm_text_uncertainty",
+      "lm_text_litigious",
+      "lm_text_net"
+    ],
+    "B_lex": [
+      "kurs_lag1",
+      "kurs_lag2",
+      "kurs_lag3",
+      "kurs_lag4",
+      "kurs_lag5",
+      "kurs_roll_mean5",
+      "kurs_roll_std5",
+      "vader_title_mean",
+      "vader_title_min",
+      "vader_title_max",
+      "vader_title_std",
+      "vader_title_pos_ratio",
+      "vader_title_neg_ratio",
+      "lm_title_negative",
+      "lm_title_positive",
+      "lm_title_uncertainty",
+      "lm_title_litigious",
+      "lm_title_net",
+      "lm_text_negative",
+      "lm_text_positive",
+      "lm_text_uncertainty",
+      "lm_text_litigious",
+      "lm_text_net"
+    ]
+  },
+  "n_model_default": 14,
+  "versi": {
+    "sklearn": "1.7.2",
+    "xgboost": "3.2.0",
+    "lightgbm": "4.6.0",
+    "pandas": "2.2.3"
+  }
+}

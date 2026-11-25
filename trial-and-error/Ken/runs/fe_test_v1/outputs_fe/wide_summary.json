@@ -1,0 +1,12 @@
+{
+  "n_combos": 1701,
+  "n_fits": 3402,
+  "n_beat_A_both_models": 601,
+  "n_beat_naive0_both_models": 22,
+  "n_beat_both_A_and_naive0": 22,
+  "naive0_val_RMSE": 0.0033818195643434104,
+  "baseline_A_val_RMSE": {
+    "Ridge": 0.003392627362581371,
+    "LightGBM": 0.0035250662228145375
+  }
+}

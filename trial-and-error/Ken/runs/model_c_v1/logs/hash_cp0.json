@@ -1,0 +1,182 @@
+﻿[
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\Model_A.ipynb",
+        "bytes":  22173,
+        "sha256":  "7809E4BCB320F43B6AE0A18DBD1E12DAA285A00F27E6D0C36A911D120A421BD9"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\Model_B.ipynb",
+        "bytes":  28829,
+        "sha256":  "C356BD34FCF747FF4FB648EE39696726FD9F08A9476466128281764164E0DA77"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\Model_C.ipynb",
+        "bytes":  40753,
+        "sha256":  "0BD47C2490AB081CED5DE7A0AED5D8A7B87D8BE6B36A19EA6211848D66F340F1"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\README.md",
+        "bytes":  3195,
+        "sha256":  "5AF9963928286F9EF24D4B4DD1FCD7801B80B46CC7491AEFAC58D0FB7598B09F"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\dataset_model_A.parquet",
+        "bytes":  91917,
+        "sha256":  "E6BD8E1E3D637EB57F8745C2F2DA7582D30F542108C38EB42493D18BC1CE8525"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\embeddings_daily_finbert.json",
+        "bytes":  72,
+        "sha256":  "48BB6A4E068D5CDB0105A485E4F5063AA1FA15EA24DC801178F5A546C6259918"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\embeddings_daily_finbert.parquet",
+        "bytes":  4839837,
+        "sha256":  "E3F5DF68B934A3B2F166669802670F3BAFFD455FD296FD4C06D9A0D5555193A2"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\embeddings_daily_roberta.json",
+        "bytes":  74,
+        "sha256":  "E42D22ED09604DA470A92DE608EBF1153E2DE880128A2CED19DD52F45518C480"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\embeddings_daily_roberta.parquet",
+        "bytes":  4839709,
+        "sha256":  "91A1B31540E64B8FDB874295A2F2AD55F9C6EFBF1127E600F68C6F9D09D8B112"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\error_analysis_model_C.csv",
+        "bytes":  24144,
+        "sha256":  "51F23334FB94D39D2E887E231506FBA777F8CD24EBD1CF641AFB0960FF2BF8CE"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\importance_model_B.csv",
+        "bytes":  3623,
+        "sha256":  "34B026936DEC4BC5CD161EB9FBCDB5B5D2FC9122FEF6AB4BC70B4ECB52453263"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\importance_model_C.csv",
+        "bytes":  19451,
+        "sha256":  "C80E37BFF24119474B2DF6440B64F2C9B556A6152326FBC8394CC90C7D7B6121"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\metadata_model_A.json",
+        "bytes":  808,
+        "sha256":  "82113AFB177393A55367D3A6BB3049F8254E1BAC180BEB506921E21C75021665"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\metadata_model_B.json",
+        "bytes":  1974,
+        "sha256":  "DD0C2394F6080A877F104FCD9936A15A67C5E797DEA927F027BB621A86C546BB"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\metadata_model_C.json",
+        "bytes":  694,
+        "sha256":  "D6568D744771E11143B8884AECFDBE2DA681BDB1803BD2BFA025960C7A681996"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\metrics_model_A.csv",
+        "bytes":  3889,
+        "sha256":  "5DAA7EC2DA9583AA88F2FBA495EEB59D9179F2B19D9DDEFD8073FD9354B92D64"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\metrics_model_B.csv",
+        "bytes":  16543,
+        "sha256":  "3FE9C0C68681B720BDDCF2AA5A79B1CDD9822D0A53305E0D267B6EBB7E4CE5E1"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\metrics_model_C.csv",
+        "bytes":  18244,
+        "sha256":  "564BBBA767FA6FB21E0ADBC8CE1517A4AABAD6F9C3165ABCD62F6A1A49EC02FC"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\naive_baselines_model_A.csv",
+        "bytes":  474,
+        "sha256":  "2E1DB71E937E6A053FC8D0D90B4F8557B78FF11BFF0C2A7BACD2C2ACAE102D49"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\predictions_test_model_A.csv",
+        "bytes":  192477,
+        "sha256":  "D8D6F874C0745CADC14978B594FEE5AC3FBA2A5B75B0154A0A73082212DC5314"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\predictions_test_model_B.csv",
+        "bytes":  821626,
+        "sha256":  "D68157F86FAB6A3C70D6E2F665485F14C116D1C9799407BD22371B6CA8D902B4"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\predictions_test_model_C.csv",
+        "bytes":  936342,
+        "sha256":  "2C893A8908A241627CEBBCE7B98A647996DB2214B57A293D31F97BEF29E369D4"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\predictions_val_model_A.csv",
+        "bytes":  188039,
+        "sha256":  "2835208CA46681A7F02580E6C3AC85679C30337E5989C5683EAFC47A73457A2A"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\predictions_val_model_B.csv",
+        "bytes":  803400,
+        "sha256":  "BF4AD0FBCC76AD84245EACAE4432D9FADB7C0E696ECD88C4136C394222896BFB"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\predictions_val_model_C.csv",
+        "bytes":  916686,
+        "sha256":  "F64099242931DA9779BF0A9EA3106ADD30DB8C742F7D3265D59412A7F48897BB"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\tsne_finbert.png",
+        "bytes":  41855,
+        "sha256":  "944380D29FB2934AB744162519E26BB1D58B93E281271305AA704704E475DC9C"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\tuning_model_B.csv",
+        "bytes":  1275,
+        "sha256":  "71C8BA53EA8C433DC6814C430F397AD7802EE48264FA0AEE847123C1AA335715"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\results\\tuning_model_C.csv",
+        "bytes":  1370,
+        "sha256":  "A064A3C5566E0782F41CE0B311B2E4B30AC73ACCBB9F09EE82FCC25A0C8D2A7D"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\report\\laporan_tugas3.pdf",
+        "bytes":  462941,
+        "sha256":  "7439599B10E0C2C90795809F81F2B5CA13092859F921BBD9AA6052594FE0AE73"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\trial-and-error\\Ken\\report\\laporan_tugas3.tex",
+        "bytes":  17950,
+        "sha256":  "3523F393A4D0C7DA1C3CE9438D8BD350FA99CD9249854BFF147B55A3A569552A"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\data\\export\\articles.parquet",
+        "bytes":  24365512,
+        "sha256":  "D1D76EA1C0C8C999C55E074B951C824D3E19526CA0B277DD0E4A5BE2E795CC25"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\data\\export\\DATA_DICTIONARY.md",
+        "bytes":  5140,
+        "sha256":  "784DF6C3E688EDB6D2348257A69D3CD20C89CFFFCD55CAB0C0F131B3691779B2"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\data\\export\\prices_daily.parquet",
+        "bytes":  105982,
+        "sha256":  "550E6DB719DF833E85216FC1ED9F3203A3A0A7F425B9D2ABCF7953B4E9BB9843"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\data\\export\\sentiment_articles.parquet",
+        "bytes":  208497,
+        "sha256":  "E572863D5CA98D85AE354A9FE9CD9951F6176B0AC8ABF20773C9C710ECEF93E8"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\data\\export\\sentiment_daily.parquet",
+        "bytes":  108826,
+        "sha256":  "5FFC6CA2A8A5BC8B586506213D544E048CEA30A6634E371852A8398D6C4D0BF6"
+    },
+    {
+        "path":  "D:\\nlpproject-grestercinta\\data\\export\\splits.json",
+        "bytes":  461,
+        "sha256":  "C8790FFC38CA1E71F1A503A647104B6C14B579F41CA7EA54A381072E926AD749"
+    }
+]

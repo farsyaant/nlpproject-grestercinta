@@ -1,0 +1,49 @@
+{
+  "combo_id": "w0066",
+  "combo_type": "group_subset",
+  "groups": [
+    "a_news",
+    "b_momentum",
+    "c_decay",
+    "g_price"
+  ],
+  "n_features": 23,
+  "criterion": "lolos: kalahkan A dan naive0 di Ridge+LightGBM pada katalog subset grup (interpretable); lalu pilih fitur paling sedikit dalam 0.3% mean RMSE terbaik",
+  "val_metrics": [
+    {
+      "model": "Ridge",
+      "RMSE": 0.0033661944301995,
+      "MAE": 0.0025587751589114,
+      "DirAcc": 0.4886363636363636,
+      "PredStd": 0.0008093957156922,
+      "delta_rmse_pct_vs_A": -0.7791286680451676,
+      "delta_rmse_pct_vs_naive0": -0.4620333476274457
+    },
+    {
+      "model": "LightGBM",
+      "RMSE": 0.0033699414349605,
+      "MAE": 0.0024965395598472,
+      "DirAcc": 0.5625,
+      "PredStd": 0.00109673669304,
+      "delta_rmse_pct_vs_A": -4.400620528773378,
+      "delta_rmse_pct_vs_naive0": -0.351234865045555
+    }
+  ],
+  "cv_metrics": [
+    {
+      "combo_id": "w0066",
+      "model": "Ridge",
+      "val_RMSE": 0.0033661944301995,
+      "cv_RMSE_mean": 0.004584531375889973,
+      "cv_RMSE_std": 0.0015608189457923124
+    },
+    {
+      "combo_id": "w0066",
+      "model": "LightGBM",
+      "val_RMSE": 0.0033699414349605,
+      "cv_RMSE_mean": 0.003915065205974874,
+      "cv_RMSE_std": 0.0004474309024065276
+    }
+  ],
+  "caveat": "Dipilih di val; test tidak dipakai sama sekali di tahap ini."
+}

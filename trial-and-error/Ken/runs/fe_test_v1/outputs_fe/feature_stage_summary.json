@@ -1,0 +1,105 @@
+{
+  "n_rows": 1194,
+  "split": {
+    "train": 836,
+    "val": 178,
+    "test": 180
+  },
+  "n_features_requested": 27,
+  "n_features_kept": 27,
+  "failed_features": [],
+  "n_check_dates": 42,
+  "check_dates": [
+    "2021-09-08",
+    "2021-10-19",
+    "2021-11-30",
+    "2022-01-10",
+    "2022-02-21",
+    "2022-04-05",
+    "2022-05-27",
+    "2022-07-08",
+    "2022-08-19",
+    "2022-09-29",
+    "2022-11-09",
+    "2022-12-20",
+    "2023-01-31",
+    "2023-03-13",
+    "2023-05-04",
+    "2023-06-19",
+    "2023-08-03",
+    "2023-09-14",
+    "2023-10-26",
+    "2023-12-06",
+    "2024-01-19",
+    "2024-03-05",
+    "2024-04-26",
+    "2024-06-13",
+    "2024-07-26",
+    "2024-09-05",
+    "2024-10-17",
+    "2024-11-28",
+    "2025-01-13",
+    "2025-02-18",
+    "2025-02-20",
+    "2025-03-17",
+    "2025-04-21",
+    "2025-05-19",
+    "2025-06-17",
+    "2025-07-11",
+    "2025-08-05",
+    "2025-08-29",
+    "2025-09-24",
+    "2025-10-17",
+    "2025-11-11",
+    "2025-11-20"
+  ],
+  "n_checks": 2268,
+  "n_check_failures": 0,
+  "tolerances": {
+    "truncation": 1e-09,
+    "future_shock": 1e-08
+  },
+  "feature_groups": {
+    "a_news": [
+      "fe_news_count",
+      "fe_no_news",
+      "fe_news_ma5",
+      "fe_news_z20"
+    ],
+    "b_momentum": [
+      "fe_vader_d1",
+      "fe_vader_d3",
+      "fe_lmnet_d1",
+      "fe_vader_dailystd5",
+      "fe_vader_range5d",
+      "fe_title_text_gap"
+    ],
+    "c_decay": [
+      "fe_vader_ewm3",
+      "fe_vader_ewm10",
+      "fe_lmnet_ewm5"
+    ],
+    "d_surprise": [
+      "fe_vader_surprise20",
+      "fe_lmnet_surprise20",
+      "fe_lmunc_surprise20"
+    ],
+    "e_interaction": [
+      "fe_vader_x_vol5",
+      "fe_neg_x_vol5",
+      "fe_news_x_vol5"
+    ],
+    "f_regime": [
+      "fe_vol5",
+      "fe_vol_ratio_5_20",
+      "fe_vol_high",
+      "fe_is_monday",
+      "fe_is_friday"
+    ],
+    "g_price": [
+      "fe_ret_t",
+      "fe_ret_z5",
+      "fe_rsi5"
+    ]
+  }
+}
