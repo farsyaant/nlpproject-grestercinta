@@ -1,0 +1,8 @@
+{
+ "emb_model": "BAAI/bge-m3",
+ "sent_model": "w11wo/indonesian-roberta-base-sentiment-classifier",
+ "max_len": 4096,
+ "pooling": "bge-m3 default (CLS), L2-norm",
+ "n": 9224,
+ "fingerprint": "967bdfd0b628b61d"
+}

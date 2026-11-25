@@ -1,0 +1,19 @@
+{
+ "names": [
+  "perang",
+  "sanksi",
+  "minyak",
+  "nuklir",
+  "diplomasi",
+  "ekonomi_as"
+ ],
+ "texts": [
+  "Perang, serangan militer, dan konflik bersenjata antarnegara",
+  "Sanksi ekonomi, tarif impor, dan perang dagang Amerika Serikat",
+  "Harga minyak dunia naik karena gangguan pasokan di Timur Tengah",
+  "Ancaman nuklir dan meningkatnya ketegangan militer",
+  "Perundingan damai, gencatan senjata, dan kesepakatan diplomatik",
+  "Suku bunga bank sentral Amerika Serikat, inflasi, dan penguatan dolar AS"
+ ],
+ "emb_model": "BAAI/bge-m3"
+}
