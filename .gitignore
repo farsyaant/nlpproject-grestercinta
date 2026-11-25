@@ -1,2 +1,7 @@
 src/preprocessing_pipeline_published.ipynb
 src/preprocessing_pipeline.ipynbcache_embeddings/
+notebook/cache_embeddings/
+src/notebook/cache_embeddings/
+.ipynb_checkpoints/
+__pycache__/
+*.npz
